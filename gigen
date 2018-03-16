@@ -81,10 +81,10 @@ def usage():
     print >> sys.stderr, '    %s list' % myself
     print >> sys.stderr, ''
     print >> sys.stderr, '- To print the gitignore file given by the keywords:'
-    print >> sys.stderr, '    %s view <one [or more] keywords>' % myself
+    print >> sys.stderr, '    %s view <space separated keywords>' % myself
     print >> sys.stderr, ''
     print >> sys.stderr, '- To create the gitignore file given by the keywords:'
-    print >> sys.stderr, '    %s create <one [or more] keywords> [optional path]' % myself
+    print >> sys.stderr, '    %s create <keywords> [optional path]' % myself
 
 def main():
     try:

@@ -1,3 +1,19 @@
 = gigen
 
-A 'gigawatt' powered project.
+A simple python POC tool to automatically generate your `.gitignore` according to the keywords available on link:https://www.gitignore.io[gitignore.io]
+
+== usage
+
+=== Available commands
+
+- To list available gitignore.io keywords:
+
+    gigen list
+
+- To print the gitignore file given by the keywords:
+
+    gigen view <space separated keywords>
+
+- To create the gitignore file given by the keywords:
+
+    gigen create <keywords> [optional path]
