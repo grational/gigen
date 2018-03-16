@@ -1,6 +1,6 @@
 = gigen
 
-A simple python POC tool to automatically generate your `.gitignore` according to the keywords available on link:https://www.gitignore.io[gitignore.io]
+A simple python PoC tool to automatically generate your `.gitignore` according to the keywords available on link:https://www.gitignore.io[gitignore.io]
 
 == Install requirements
 
@@ -8,14 +8,14 @@ A simple python POC tool to automatically generate your `.gitignore` according t
 
 == Usage
 
-- To list available gitignore.io keywords:
+- To list all the available keywords:
 
     gigen list
 
-- To print the gitignore file given by the keywords:
+- To print out the content given by the keywords:
 
     gigen view <space separated keywords>
 
-- To create the gitignore file given by the keywords:
+- To actually create the `.gitignore` file:
 
-    gigen create <keywords> [optional path]
+    gigen create <keywords> [optional path or current dir]
