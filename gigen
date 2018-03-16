@@ -1,0 +1,114 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+## ------------------------------------------------------ ##
+##   ________ __  ________                                ##
+##  /  _____/|__|/  _____/  ____   ____                   ##
+## /   \  ___|  /   \  ____/ __ \ /    \                  ##
+## \    \_\  |  \    \_\  \  ___/|   |  \                 ##
+##  \______  |__|\______  /\___  |___|  /                 ##
+##         \/           \/     \/     \/                  ##
+##                                                        ##
+## GitIgnore Generator                                    ##
+## @version: 0.1.0                                        ##
+## @author: Giuseppe Ricupero                             ##
+## @e-mail: <giuseppe.ricupero@polito.it>                 ##
+## @date: 16-03-2018 15.44                                ##
+## @description:                                          ##
+## create a gitignore file accordind to the keywords      ##
+## passed as parameters using the gitignore.io api        ##
+## ------------------------------------------------------ ##
+import sys
+import requests
+import re
+import os
+
+class GitIgnoreFile:
+    def __init__(self,path,content):
+        self.path = path
+        self.content = content
+
+    def save(self):
+        path = self.path + '/.gitignore'
+        gitignore_file = open(path,"w")
+        gitignore_file.write(self.content)
+        gitignore_file.close()
+        print "File '%s' created" % path
+
+class GitIgnoreSite:
+    base_url = 'https://www.gitignore.io/api/'
+
+    def keywords(self):
+        response = requests.get(self.base_url + 'list')
+        return response.content
+
+    def generate(self,keywords):
+        csk = ",".join(keywords)
+        response = requests.get(self.base_url + csk)
+        return re.sub(r'# Created by (https://\S+)',r'# Created by GiGen (https://github.com/grational/gigen) using \1',response.content)
+
+class CommandLineParser:
+    allowed_commands = ['list','view','create']
+
+    def __init__(self,argv):
+        if len(argv) < 2 or argv[1] not in self.allowed_commands:
+            raise Exception('Not enough or invalid arguments!')
+        self.command = argv[1]
+        self.cli_rest = argv[2:]
+
+    def invalid(self):
+        if len(self.argv) < 2 or self.command not in allowed_commands:
+            invalid = True
+        return invalid
+
+    def keywords(self):
+        if len(self.cli_rest) == 0:
+           raise Exception('No keywords passed!')
+        if self.command == 'view':
+            return self.cli_rest
+        elif self.command == 'create':
+            return self.cli_rest[:-1]
+
+    def path(self):
+        if not os.path.isdir(self.cli_rest[-1]):
+            raise Exception('The path passed is invalid!')
+        return self.cli_rest[-1]
+
+def usage():
+    myself = re.sub('^.*/','',__file__)
+    print >> sys.stderr, '%s (gitignore generator)' % myself
+    print >> sys.stderr, ''
+    print >> sys.stderr, '- To list available gitignore.io keywords:'
+    print >> sys.stderr, '    %s list' % myself
+    print >> sys.stderr, ''
+    print >> sys.stderr, '- To print the gitignore file given by the keywords:'
+    print >> sys.stderr, '    %s view <one [or more] keywords>' % myself
+    print >> sys.stderr, ''
+    print >> sys.stderr, '- To create the gitignore file given by the keywords:'
+    print >> sys.stderr, '    %s create <one [or more] keywords> [optional path]' % myself
+
+def main():
+    try:
+        cli_parser = CommandLineParser(sys.argv)
+        gitignore_site = GitIgnoreSite()
+        command = cli_parser.command
+
+        if command == 'list':
+            print gitignore_site.keywords()
+        else:
+            gitignore_content = gitignore_site.generate(cli_parser.keywords())
+            if command == 'view':
+                print gitignore_content
+            elif command == 'create':
+                path = cli_parser.path()
+                gitignore_file = GitIgnoreFile(path,gitignore_content)
+                gitignore_file.save()
+    except Exception as e:
+        print >> sys.stderr, "err> %s" % e
+        usage()
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
+    sys.exit(0)
+
+# vim: fdm=indent
