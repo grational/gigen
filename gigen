@@ -9,10 +9,10 @@
 ##         \/           \/     \/     \/                  ##
 ##                                                        ##
 ## GitIgnore Generator                                    ##
-## @version: 0.1.0                                        ##
+## @version: 0.2.0                                        ##
 ## @author: Giuseppe Ricupero                             ##
 ## @e-mail: <giuseppe.ricupero@polito.it>                 ##
-## @date: 16-03-2018 15.44                                ##
+## @date: 16-03-2018 20.35                                ##
 ## @description:                                          ##
 ## create a gitignore file accordind to the keywords      ##
 ## passed as parameters using the gitignore.io api        ##
