@@ -2,9 +2,11 @@
 
 A simple python POC tool to automatically generate your `.gitignore` according to the keywords available on link:https://www.gitignore.io[gitignore.io]
 
-== usage
+== Install requirements
 
-=== Available commands
+    pip install -r requirements.txt
+
+== Usage
 
 - To list available gitignore.io keywords:
 
