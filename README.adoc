@@ -19,3 +19,13 @@ A simple python PoC tool to automatically generate your `.gitignore` according t
 - To actually create the `.gitignore` file:
 
     gigen create <keywords> [optional path or current dir]
+
+== Example
+
+To create a `.gitignore` file for a `python` project maintained using `pycharm` on a `windows` box use:
+
+    gigen create python pycharm windows C:\Path\To\The\Project
+
+For an equivalent project written into `groovy` using `vim` on a `linux` box:
+
+    gigen create groovy vim linux /path/to/the/groovy_project
