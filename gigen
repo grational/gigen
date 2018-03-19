@@ -9,10 +9,10 @@
 ##         \/           \/     \/     \/                  ##
 ##                                                        ##
 ## GitIgnore Generator                                    ##
-## @version: 0.2.0                                        ##
+## @version: 0.2.1                                        ##
 ## @author: Giuseppe Ricupero                             ##
 ## @e-mail: <giuseppe.ricupero@polito.it>                 ##
-## @date: 16-03-2018 20.35                                ##
+## @date: 19-03-2018 16.21                                ##
 ## @description:                                          ##
 ## create a gitignore file accordind to the keywords      ##
 ## passed as parameters using the gitignore.io api        ##
@@ -29,10 +29,15 @@ class GitIgnoreFile:
 
     def save(self):
         path = os.path.join(self.path,'.gitignore')
-        gitignore_file = open(path,"w")
-        gitignore_file.write(self.content)
-        gitignore_file.close()
-        print "File '%s' created" % path
+        if os.path.isfile(path):
+            res = raw_input("'%s' file already exists. Do you want to overwrite it? [y/n] " % path).lower()
+            if res.startswith('y'):
+                gitignore_file = open(path,"w")
+                gitignore_file.write(self.content)
+                gitignore_file.close()
+                print "File '%s' created" % path
+            else:
+                print 'Nothing done.'
 
 class GitIgnoreSite:
     base_url = 'https://www.gitignore.io/api/'
