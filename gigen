@@ -28,7 +28,7 @@ class GitIgnoreFile:
         self.content = content
 
     def save(self):
-        path = self.path + '/.gitignore'
+        path = os.path.join(self.path,'.gitignore')
         gitignore_file = open(path,"w")
         gitignore_file.write(self.content)
         gitignore_file.close()
