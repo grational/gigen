@@ -12,7 +12,7 @@
 ## @version: 0.2.1                                        ##
 ## @author: Giuseppe Ricupero                             ##
 ## @e-mail: <giuseppe.ricupero@polito.it>                 ##
-## @date: 19-03-2018 16.21                                ##
+## @date: 2020-11-17 08.07                                ##
 ## @description:                                          ##
 ## create a gitignore file accordind to the keywords      ##
 ## passed as parameters using the gitignore.io api        ##
@@ -30,14 +30,14 @@ class GitIgnoreFile:
     def save(self):
         path = os.path.join(self.path,'.gitignore')
         if os.path.isfile(path):
-            res = raw_input("'%s' file already exists. Do you want to overwrite it? [y/n] " % path).lower()
+            res = input("'%s' file already exists. Do you want to overwrite it? [y/n] " % path).lower()
             if res.startswith('y'):
                 gitignore_file = open(path,"w")
                 gitignore_file.write(self.content)
                 gitignore_file.close()
-                print "File '%s' created" % path
+                print("File '%s' created" % path)
             else:
-                print 'Nothing done.'
+                print('Nothing done.')
 
 class GitIgnoreSite:
     base_url = 'https://www.gitignore.io/api/'
@@ -77,16 +77,16 @@ class CommandLineParser:
 
 def usage():
     myself = re.sub('^.*/','',__file__)
-    print >> sys.stderr, '%s (gitignore generator)' % myself
-    print >> sys.stderr, ''
-    print >> sys.stderr, '- To list available gitignore.io keywords:'
-    print >> sys.stderr, '    %s list' % myself
-    print >> sys.stderr, ''
-    print >> sys.stderr, '- To print the gitignore file given by the keywords:'
-    print >> sys.stderr, '    %s view <space separated keywords>' % myself
-    print >> sys.stderr, ''
-    print >> sys.stderr, '- To create the gitignore file given by the keywords:'
-    print >> sys.stderr, '    %s create <keywords>' % myself
+    print('%s (gitignore generator)' % myself, file=sys.stderr)
+    print('', file=sys.stderr)
+    print('- To list available gitignore.io keywords:', file=sys.stderr)
+    print('    %s list' % myself, file=sys.stderr)
+    print('', file=sys.stderr)
+    print('- To print the gitignore file given by the keywords:', file=sys.stderr)
+    print('    %s view <space separated keywords>' % myself, file=sys.stderr)
+    print('', file=sys.stderr)
+    print('- To create the gitignore file given by the keywords:', file=sys.stderr)
+    print('    %s create <keywords>' % myself, file=sys.stderr)
 
 def main():
     try:
@@ -95,17 +95,17 @@ def main():
         command = cli_parser.command
 
         if command == 'list':
-            print gitignore_site.keywords()
+            print(gitignore_site.keywords())
         else:
             gitignore_content = gitignore_site.generate(cli_parser.keywords)
             if command == 'view':
-                print gitignore_content
+                print(gitignore_content)
             elif command == 'create':
                 path = cli_parser.path
                 gitignore_file = GitIgnoreFile(path,gitignore_content)
                 gitignore_file.save()
     except Exception as e:
-        print >> sys.stderr, "err> %s" % e
+        print("err> %s" % e, file=sys.stderr)
         usage()
         sys.exit(1)
 
