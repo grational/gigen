@@ -40,16 +40,16 @@ class GitIgnoreFile:
                 print('Nothing done.')
 
 class GitIgnoreSite:
-    base_url = 'https://www.gitignore.io/api/'
+    base_url = 'https://www.toptal.com/developers/gitignore/api/'
 
     def keywords(self):
         response = requests.get(self.base_url + 'list')
-        return response.content
+        return response.text
 
     def generate(self,keywords):
         csk = ",".join(keywords)
         response = requests.get(self.base_url + csk)
-        return re.sub(r'# Created by (https://\S+)',r'# Created by GiGen (https://github.com/grational/gigen) using \1',response.content)
+        return re.sub(r'# Created by (https://\S+)',r'# Created by GiGen (https://github.com/grational/gigen) using \1',response.text)
 
 class CommandLineParser:
     allowed_commands = ['list','view','create']
